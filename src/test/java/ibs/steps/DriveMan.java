@@ -27,7 +27,7 @@ public class DriveMan {
             capabilities.setCapability("selenoid:options", selenoidOptions);
 
             return new RemoteWebDriver(
-                    URI.create(url).toURL(),
+                    URI.create("http://jenkins.applineselenoid.fvds.ru:4444/wd/hub").toURL(),
                     capabilities
             );
 
