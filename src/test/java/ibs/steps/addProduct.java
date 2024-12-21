@@ -30,8 +30,13 @@ public class addProduct {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("browserName", "chrome");
         capabilities.setCapability("browserVersion", "109.0");
-        capabilities.setCapability("enableVNC", true);
-        capabilities.setCapability("enableVideo", false);
+
+        Map<String, Object> selenoidOptions = new HashMap<>();
+        selenoidOptions.put("enableVNC", true);
+        selenoidOptions.put("enableVideo", false);
+
+        capabilities.setCapability("selenoid:options", selenoidOptions);
+
         driver = new RemoteWebDriver(URI.create("https://qualit.applineselenoid.fvds.ru").toURL(), capabilities);
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
