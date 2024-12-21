@@ -27,10 +27,12 @@ public class addProduct {
     @Допустим("Тестовый стенд запущен, открыта страница по адресу {string}")
     public void Тестовый_стенд_запущен_открыта_страница_по_адресу(String string) throws MalformedURLException {
 
+
+
         DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("browserName", "chrome");
+        capabilities.setCapability("browserVersion", "109.0");
         Map<String, Object> selenoidOptions = new HashMap<>();
-        selenoidOptions.put("browserName", "chrome");
-        selenoidOptions.put("browserVersion", "109.0");
         selenoidOptions.put("enableVNC", true);
         selenoidOptions.put("enableVideo", false);
         capabilities.setCapability("selenoid:options", selenoidOptions);
