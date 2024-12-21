@@ -26,7 +26,7 @@ public class DriveMan {
             capabilities.setCapability("selenoid:options", selenoidOptions);
 
             return new RemoteWebDriver(
-                    URI.create(System.getProperty("selenoid.url", System.getProperty("selenoid.url"))).toURL(),
+                    URI.create(System.getProperty("selenoid.url")).toURL(),
                     capabilities
             );
 
