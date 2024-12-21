@@ -14,6 +14,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,14 +28,20 @@ public class addProduct {
     public void Тестовый_стенд_запущен_открыта_страница_по_адресу(String string) throws MalformedURLException {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName("chrome");
-        capabilities.setVersion("109.0");
-        capabilities.setCapability("enableVNC", true);
-        //System.setProperty("webdriver.edge.driver", "src\\test\\resources\\msedgedriver.exe");
+        Map<String, Object> selenoidOptions = new HashMap<>();
+        selenoidOptions.put("browserName", "chrome");
+        selenoidOptions.put("browserVersion", "109.0");
+        selenoidOptions.put("enableVNC", true);
+        selenoidOptions.put("enableVideo", false);
+        capabilities.setCapability("selenoid:options", selenoidOptions);
         driver = new RemoteWebDriver(URI.create(string).toURL(), capabilities);
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        WebElement sand1 = driver.findElement(By.xpath("//a[@href='#']"));
+        sand1.click();
+        WebElement sand = driver.findElement(By.xpath("//a[@href='/food']"));
+        sand.click();
     }
 
     @И("Нажать кнопку {string}")
