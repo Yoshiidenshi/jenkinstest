@@ -27,6 +27,7 @@ public class addProduct {
     @Допустим("Тестовый стенд запущен, открыта страница по адресу")
     public void Тестовый_стенд_запущен_открыта_страница_по_адресу() throws MalformedURLException {
         driver = DriveMan.createDriver();
+	driver.get("https://qualit.applineselenoid.fvds.ru/");
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
