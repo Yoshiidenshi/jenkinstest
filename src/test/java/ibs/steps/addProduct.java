@@ -24,19 +24,15 @@ public class addProduct {
 
     static WebDriver driver;
 
-    @Допустим("Тестовый стенд запущен, открыта страница по адресу {string}")
-    public void Тестовый_стенд_запущен_открыта_страница_по_адресу(String string) throws MalformedURLException {
-
-
+    @Допустим("Тестовый стенд запущен, открыта страница по адресу")
+    public void Тестовый_стенд_запущен_открыта_страница_по_адресу() throws MalformedURLException {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("browserName", "chrome");
         capabilities.setCapability("browserVersion", "109.0");
-        Map<String, Object> selenoidOptions = new HashMap<>();
-        selenoidOptions.put("enableVNC", true);
-        selenoidOptions.put("enableVideo", false);
-        capabilities.setCapability("selenoid:options", selenoidOptions);
-        driver = new RemoteWebDriver(URI.create(string).toURL(), capabilities);
+        capabilities.setCapability("enableVNC", true);
+        capabilities.setCapability("enableVideo", false);
+        driver = new RemoteWebDriver(URI.create("https://qualit.applineselenoid.fvds.ru").toURL(), capabilities);
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
