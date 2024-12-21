@@ -18,8 +18,8 @@ public class DriveMan {
 	String url = System.getProperty("selenoid.url");
 
             DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability("browserName", browser);
-            capabilities.setCapability("browserVersion", version);
+            capabilities.setCapability("browserName", "chrome");
+            capabilities.setCapability("browserVersion", "109.0");
 
             Map<String, Object> selenoidOptions = new HashMap<>();
             selenoidOptions.put("enableVNC", true);
