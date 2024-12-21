@@ -37,7 +37,7 @@ public class addProduct {
 
         capabilities.setCapability("selenoid:options", selenoidOptions);
 
-        driver = new RemoteWebDriver(new URL("https://qualit.applineselenoid.fvds.ru"), capabilities);
+        driver = new RemoteWebDriver(URI.create("https://qualit.applineselenoid.fvds.ru"), capabilities);
         driver.manage().window().maximize();
         driver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
