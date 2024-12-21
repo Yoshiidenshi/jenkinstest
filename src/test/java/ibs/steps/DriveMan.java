@@ -15,6 +15,7 @@ public class DriveMan {
         //String runType = System.getProperty("type.run", System.getProperty("type.run"));
         String browser = System.getProperty("type.browser", System.getProperty("type.browser"));
         String version = System.getProperty("browser.version", System.getProperty("browser.version"));
+	String url = System.getProperty("selenoid.url", System.getProperty("selenoid.url"));
 
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability("browserName", browser);
@@ -26,7 +27,7 @@ public class DriveMan {
             capabilities.setCapability("selenoid:options", selenoidOptions);
 
             return new RemoteWebDriver(
-                    URI.create(System.getProperty("selenoid.url")).toURL(),
+                    URI.create(url).toURL(),
                     capabilities
             );
 
