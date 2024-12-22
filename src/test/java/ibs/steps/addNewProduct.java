@@ -16,7 +16,7 @@ public class addNewProduct {
 
     @Допустим("К стенду подключена БД")
     public void к_стенду_подключена_бд() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:h2:tcp://qualit.applineselenoid.fvds.ru/mem:testdb","user","pass");
+        connection = DriverManager.getConnection("jdbc:h2:tcp://localhost:9092/mem:testdb","user","pass");
         statement = connection.createStatement();
     }
 
