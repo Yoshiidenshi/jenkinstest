@@ -2,6 +2,7 @@ package ibs.steps;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -33,9 +34,9 @@ public class DriveMan {
         if ("local".equalsIgnoreCase(runType)) {
 
             switch (browser.toLowerCase()) {
-                case "opera":
-                    System.setProperty("webdriver.msedgedriver.driver", "\\src\\test\\resources\\msedgedriver.exe");
-                    return new EdgeDriver();
+                case "firefox":
+                    System.setProperty("webdriver.gecko.driver", "\\src\\test\\resources\\geckodriver.exe");
+                    return new FirefoxDriver();
 
                 case "chrome":
                     System.setProperty("webdriver.msedgedriver.driver", "\\src\\test\\resources\\msedgedriver.exe");
@@ -58,8 +59,8 @@ public class DriveMan {
                             capabilities
                     );
 
-                case "opera":
-                    capabilities.setCapability("browserVersion", "94.0");
+                case "firefox":
+                    capabilities.setCapability("browserVersion", "108.0");
                     selenoidOptions.put("enableVNC", true);
                     selenoidOptions.put("enableVideo", false);
                     capabilities.setCapability("selenoid:options", selenoidOptions);
@@ -74,3 +75,4 @@ public class DriveMan {
         }
     }
 }
+
