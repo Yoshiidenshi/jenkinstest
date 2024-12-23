@@ -1,36 +1,76 @@
 package ibs.steps;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 public class DriveMan {
 
-    public static WebDriver createDriver() throws MalformedURLException {
-        //String runType = System.getProperty("type.run", System.getProperty("type.run"));
-        String browser = System.getProperty("type.browser", System.getProperty("type.browser"));
-        String version = System.getProperty("browser.version", System.getProperty("browser.version"));
-	String url = System.getProperty("selenoid.url");
-
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability("browserName", "chrome");
-            capabilities.setCapability("browserVersion", "109.0");
-
-            Map<String, Object> selenoidOptions = new HashMap<>();
-            selenoidOptions.put("enableVNC", true);
-            selenoidOptions.put("enableVideo", false);
-            capabilities.setCapability("selenoid:options", selenoidOptions);
-
-            return new RemoteWebDriver(
-                    URI.create("http://jenkins.applineselenoid.fvds.ru:4444/wd/hub").toURL(),
-                    capabilities
-            );
-
+    private static Properties loadProperties() {
+        Properties props = new Properties();
+        try (FileInputStream fis = new FileInputStream("src/test/resources/config.properties")) {
+            props.load(fis);
+        } catch (IOException e) {
+            throw new RuntimeException("Не удалось загрузить файл config.properties", e);
+        }
+        return props;
     }
 
+    public static WebDriver createDriver() throws MalformedURLException {
+        Properties props = loadProperties();
+        String runType = System.getProperty("type.run", props.getProperty("type.run"));
+        String browser = System.getProperty("type.browser", props.getProperty("type.browser"));
+
+        if ("local".equalsIgnoreCase(runType)) {
+
+            switch (browser.toLowerCase()) {
+                case "opera":
+                    System.setProperty("webdriver.msedgedriver.driver", "\\src\\test\\resources\\msedgedriver.exe");
+                    return new EdgeDriver();
+
+                case "chrome":
+                    System.setProperty("webdriver.msedgedriver.driver", "\\src\\test\\resources\\msedgedriver.exe");
+                    return new EdgeDriver();
+                default:
+                    throw new IllegalArgumentException("Неизвестный локальный браузер: " + browser);
+            }
+        } else {
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            Map<String, Object> selenoidOptions = new HashMap<>();
+            capabilities.setCapability("browserName", browser);
+            switch (browser.toLowerCase()) {
+                case "chrome":
+                    capabilities.setCapability("browserVersion", "109.0");
+                    selenoidOptions.put("enableVNC", true);
+                    selenoidOptions.put("enableVideo", false);
+                    capabilities.setCapability("selenoid:options", selenoidOptions);
+                    return new RemoteWebDriver(
+                            URI.create("http://jenkins.applineselenoid.fvds.ru:4444/wd/hub").toURL(),
+                            capabilities
+                    );
+
+                case "opera":
+                    capabilities.setCapability("browserVersion", "94.0");
+                    selenoidOptions.put("enableVNC", true);
+                    selenoidOptions.put("enableVideo", false);
+                    capabilities.setCapability("selenoid:options", selenoidOptions);
+                    return new RemoteWebDriver(
+                            URI.create("http://jenkins.applineselenoid.fvds.ru:4444/wd/hub").toURL(),
+                            capabilities
+                    );
+
+                default:
+                    throw new IllegalArgumentException("Неизвестный локальный браузер: " + browser);
+                }
+        }
+    }
 }
