@@ -1,6 +1,7 @@
 package ibs.steps;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -35,12 +36,12 @@ public class DriveMan {
 
             switch (browser.toLowerCase()) {
                 case "firefox":
-                    System.setProperty("webdriver.gecko.driver", "\\src\\test\\resources\\geckodriver.exe");
+                    System.setProperty("webdriver.gecko.driver", "/src/test/resources/geckodriver.exe");
                     return new FirefoxDriver();
 
                 case "chrome":
-                    System.setProperty("webdriver.msedgedriver.driver", "\\src\\test\\resources\\msedgedriver.exe");
-                    return new EdgeDriver();
+                    System.setProperty("webdriver.chrome.driver", "/src/test/resources/chromedriver.exe");
+                    return new ChromeDriver();
                 default:
                     throw new IllegalArgumentException("Неизвестный локальный браузер: " + browser);
             }
